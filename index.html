@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Amicable Numbers</title>
+    <meta name = 'viewport' content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div id='header'>
+        <h1>Amicable Numbers</h1>
+    </div>
+    <form id = 'form'>
+        Number 1 <input type = 'box' id = 'first'><br />
+        Number 2 <input type = 'box' id = 'second'><br />
+        Check Numbers <input type = 'button' onclick = "start(this.form)" id = 'button'><br />
+    </form>
+    
+    <div class = "first-box" id = 'results'>&nbsp;</div>
+
+    <script language="javascript">
+        function start(form) {
+            // Get and print the two numbers from the HTML form
+            num1 = form.first.value;
+            num2 = form.second.value;
+            // Get the factors of each number.
+            var factors1 = loopThrough(num1);
+            var factors2 = loopThrough(num2);
+            // Find the sum of the factors for each number.
+            total1 = addFactors(factors1);
+            total2 = addFactors(factors2);
+            // Print the results
+            if ((total1 == num2) && (total2 == num1)){
+                printResults(true, num1, num2);
+            } else {
+                printResults(false, num1, num2);
+            }
+        }
+        function loopThrough(num) {
+            // Loops through the possible factors Prints the factors and then
+            // returns an array containing the factors
+            var factors = new Array();
+            index = 0;
+            for (i = 1; i <= (num/2); i++){
+                if (isAFactor(i,num)){
+                    factors[index] = i;
+                    index++;
+                }
+            }
+            printFactors(factors, num);
+            return factors;
+        }
+        function isAFactor(a, b) {
+            // Returns true if a is factor of b, returns false otherwise
+            if (b%a == 0){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function addFactors(nums) {
+            // Returns the total sum of the factors
+            total = 0;
+            for (i = 0; i < nums.length; i++) {
+                total += nums[i];
+            }
+            return total;
+        }
+        function printFactors(factors, num) {
+            // Prints the factors to a Popup
+            toPrint = "The factors of the number " + num + " are: "; 
+            for (i = 0; i < factors.length; i++) {
+                toPrint += factors[i];
+                toPrint += " ";
+            }
+            window.alert(toPrint);
+        }
+        function printResults(amicable, num1, num2) {
+            // Prints the results to a div in HTML
+            if(amicable) {
+                results = " are amicable";
+            } else {
+                results = " are not amicable";
+            }
+            document.getElementById('results').innerHTML = "The numbers: " + num1 + " and " + num2 + results;
+        }
+    </script>
+    
+</body>
+</html>
